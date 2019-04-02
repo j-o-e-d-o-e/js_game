@@ -35,6 +35,15 @@ function moveBalls() {
     });
 }
 
+function countNGoodBalls(balls, colorToEat) {
+    let nBalls = 0;
+    balls.forEach(function (b) {
+        if (b.color === colorToEat)
+            nBalls++;
+    });
+    return nBalls;
+}
+
 function testCollisionBallWithWalls(b) {
     // COLLISION WITH VERTICAL WALLS ?
     if ((b.x + b.radius) > w) {

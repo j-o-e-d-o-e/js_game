@@ -4,12 +4,10 @@ let mousePos;
 
 // an empty array!
 let balls = [];
-let initialNumberOfBalls;
+let nBalls;
 let colorToEat = 'red';
 let wrongBallsEaten = goodBallsEaten = 0;
-let numberOfGoodBalls;
-
-
+let nGoodBalls;
 
 window.onload = function init() {
     // called AFTER the page has been loaded
@@ -34,12 +32,12 @@ window.onload = function init() {
     mainLoop();
 };
 
-function startGame(nBalls) {
+function startGame(numBalls) {
     do {
-        balls = createBalls(nBalls);
-        initialNumberOfBalls = nBalls;
-        numberOfGoodBalls = countNumberOfGoodBalls(balls, colorToEat);
-    } while (numberOfGoodBalls === 0);
+        balls = createBalls(numBalls);
+        nBalls = numBalls;
+        nGoodBalls = countNGoodBalls(balls, colorToEat);
+    } while (nGoodBalls === 0);
 
     // noinspection JSUndeclaredVariable
     wrongBallsEaten = goodBallsEaten = 0;
@@ -53,26 +51,14 @@ function mainLoop() {
     // draw the player and the balls
     drawPlayer();
     drawAllBalls(balls);
-    drawBallNumbers(balls);
+    drawNumBalls(balls);
 
     // animate the ball that is bouncing all over the walls
     moveBalls(balls);
-
     movePlayer();
 
     // ask for a new animation frame
     requestAnimationFrame(mainLoop);
-}
-
-function countNumberOfGoodBalls(balls, colorToEat) {
-    let nBalls = 0;
-
-    balls.forEach(function (b) {
-        if (b.color === colorToEat)
-            nBalls++;
-    });
-
-    return nBalls;
 }
 
 // Collisions between rectangle and circle
@@ -86,14 +72,14 @@ function circRectsOverlap(x0, y0, w0, h0, cx, cy, r) {
     return (((cx - testX) * (cx - testX) + (cy - testY) * (cy - testY)) < r * r);
 }
 
-function drawBallNumbers(balls) {
+function drawNumBalls() {
     ctx.save();
     ctx.font = "20px Arial";
 
     if (balls.length === 0) {
         ctx.fillText("Game Over!", 20, 30);
-    } else if (goodBallsEaten === numberOfGoodBalls) {
-        ctx.fillText("You Win! Final score : " + (initialNumberOfBalls - wrongBallsEaten),
+    } else if (goodBallsEaten === nGoodBalls) {
+        ctx.fillText("You Win! Final score : " + (nBalls - wrongBallsEaten),
             20, 30);
     } else {
         ctx.fillText("Balls still alive: " + balls.length, 210, 30);
