@@ -1,5 +1,6 @@
 let canvas, ctx, width, height;
 let mousePos;
+let player;
 let balls = [];
 let nBalls = 10, nGoodBalls;
 let wrongBallsEaten = 0;
@@ -15,6 +16,8 @@ window.onload = function init() {
     // often useful
     width = canvas.width;
     height = canvas.height;
+
+    player = new Player(10, 10, 20, 20, 'red');
 
     // important, we will draw with this object
     ctx = canvas.getContext('2d');
