@@ -15,7 +15,7 @@ function collides(ball, index) {
     collidesWithWall(ball);
 }
 
-// Collisions between player and balls
+// detects collision between ball and player
 function collidesWithPlayer(playerX, playerY, playerWidth, playerHeight, ballX, ballY, radius) {
     let testX = ballX;
     let testY = ballY;
@@ -26,6 +26,7 @@ function collidesWithPlayer(playerX, playerY, playerWidth, playerHeight, ballX, 
     return (((ballX - testX) * (ballX - testX) + (ballY - testY) * (ballY - testY)) < radius * radius);
 }
 
+// detects collision between ball and wall
 function collidesWithWall(ball) {
     // COLLISION WITH VERTICAL WALLS ?
     if ((ball.x + ball.radius) > width) {
