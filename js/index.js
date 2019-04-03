@@ -26,12 +26,11 @@ window.onload = function init() {
     canvas.addEventListener('mousemove', function (evt) {
         // necessary work in the canvas coordinate system
         let rect = canvas.getBoundingClientRect();
-        mousePos =  {
+        mousePos = {
             x: evt.clientX - rect.left,
             y: evt.clientY - rect.top
         };
     });
-
     // Load sounds
     collisionSound = new Howl({
         urls: ['https://raw.githubusercontent.com/j-o-e-d-o-e/the_assassin/master/core/assets/sounds/shot.wav'],
@@ -50,14 +49,17 @@ function mainLoop() {
     ctx.clearRect(0, 0, width, height);
 
     player.draw();
-    drawBalls();
+    balls.forEach(function (ball) {
+        ball.draw();
 
+    });
     player.move();
-    moveBalls();
-
+    balls.forEach(function (ball, index) {
+        ball.move();
+        collides(ball, index);
+    });
     updateStatus();
 
-    console.log("Looping? " + looping);
     if (looping) {
         // ask for a new animation frame
         requestAnimationFrame(mainLoop);
@@ -84,6 +86,39 @@ function updateStatus() {
     ctx.restore();
 }
 
+function newGame() {
+
+    createBalls();
+    nGoodBalls = countNGoodBalls();
+    wrongBallsEaten = goodBallsEaten = 0;
+    if (!looping) {
+        looping = true;
+        console.log("Looping (new Game)? " + looping);
+        mainLoop();
+    }
+}
+
+function createBalls() {
+    balls = [];
+    for (let i = 0; i < nBalls; i++) {
+        let x = width / 2;
+        let y = height / 2;
+        let radius = 5 + 30 * Math.random();// between 5 and 35
+        let speedX = -5 + 10 * Math.random(); // between -5 and + 5
+        let speedY = -5 + 10 * Math.random(); // between -5 and + 5
+        balls.push(new Ball(x, y, radius, speedX, speedY));
+    }
+}
+
+function countNGoodBalls() {
+    let nBalls = 0;
+    balls.forEach(function (b) {
+        if (b.color === colorToEat)
+            nBalls++;
+    });
+    return nBalls;
+}
+
 function changeNBalls(num) {
     nBalls = num;
 }
@@ -97,16 +132,5 @@ function changeColorToEat(color) {
 }
 
 function changeBallSpeed(speed) {
-    ballSpeed = speed;
-}
-
-function newGame() {
-    balls = createBalls(nBalls);
-    nGoodBalls = countNGoodBalls(balls, colorToEat);
-    wrongBallsEaten = goodBallsEaten = 0;
-    if (!looping) {
-        looping = true;
-        console.log("Looping (new Game)? " + looping);
-        mainLoop();
-    }
+    Ball.speedFactor = speed;
 }
