@@ -1,4 +1,5 @@
 let canvas, ctx, width, height;
+let mousePos;
 let balls = [];
 let nBalls = 10, nGoodBalls;
 let wrongBallsEaten = 0;
@@ -20,7 +21,12 @@ window.onload = function init() {
 
     // add a mousemove event listener to the canvas
     canvas.addEventListener('mousemove', function (evt) {
-        mousePos = getMousePos(canvas, evt);
+        // necessary work in the canvas coordinate system
+        let rect = canvas.getBoundingClientRect();
+        mousePos =  {
+            x: evt.clientX - rect.left,
+            y: evt.clientY - rect.top
+        };
     });
 
     // Load sounds
@@ -40,10 +46,10 @@ function mainLoop() {
     // clear canvas
     ctx.clearRect(0, 0, width, height);
 
-    drawPlayer();
+    player.draw();
     drawBalls();
 
-    movePlayer();
+    player.move();
     moveBalls();
 
     updateStatus();

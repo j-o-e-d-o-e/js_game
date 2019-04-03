@@ -1,6 +1,14 @@
 const colors = ['red', 'blue', 'cyan', 'purple', 'pink', 'green', 'yellow'];
 let ballSpeed = 1;
 
+function moveBalls() {
+    balls.forEach(function (ball, index) {
+        ball.x += (ball.speedX * ballSpeed);
+        ball.y += (ball.speedY * ballSpeed);
+        collides(ball, index);
+    });
+}
+
 function drawBalls() {
     balls.forEach(function (ball) {
         // GOOD practice: save the context, use 2D transformations
@@ -17,14 +25,6 @@ function drawBalls() {
 
         // GOOD practice: restore the context
         ctx.restore();
-    });
-}
-
-function moveBalls() {
-    balls.forEach(function (ball, index) {
-        ball.x += (ball.speedX * ballSpeed);
-        ball.y += (ball.speedY * ballSpeed);
-        collides(ball, index);
     });
 }
 

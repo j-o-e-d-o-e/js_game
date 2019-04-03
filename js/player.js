@@ -3,37 +3,25 @@ const player = {
     y: 10,
     width: 20,
     height: 20,
-    color: 'red'
-};
-let mousePos;
+    color: 'red',
+    move: function(){
+        if (mousePos !== undefined) {
+            this.x = mousePos.x;
+            this.y = mousePos.y;
+        }
+    },
+    draw: function(){
+        // GOOD practice: save the context, use 2D transformations
+        ctx.save();
 
-function getMousePos(canvas, evt) {
-    // necessary work in the canvas coordinate system
-    let rect = canvas.getBoundingClientRect();
-    return {
-        x: evt.clientX - rect.left,
-        y: evt.clientY - rect.top
-    };
-}
+        // translate the coordinate system, draw relative to it
+        ctx.translate(this.x, this.y);
 
-function drawPlayer() {
-    // GOOD practice: save the context, use 2D transformations
-    ctx.save();
+        ctx.fillStyle = this.color;
+        // (0, 0) is the top left corner of the monster.
+        ctx.fillRect(0, 0, this.width, this.height);
 
-    // translate the coordinate system, draw relative to it
-    ctx.translate(player.x, player.y);
-
-    ctx.fillStyle = player.color;
-    // (0, 0) is the top left corner of the monster.
-    ctx.fillRect(0, 0, player.width, player.height);
-
-    // GOOD practice: restore the context
-    ctx.restore();
-}
-
-function movePlayer() {
-    if (mousePos !== undefined) {
-        player.x = mousePos.x;
-        player.y = mousePos.y;
+        // GOOD practice: restore the context
+        ctx.restore();
     }
-}
+};
