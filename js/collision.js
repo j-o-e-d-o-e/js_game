@@ -1,5 +1,6 @@
 function collides(ball, index) {
     if (collidesWithPlayer(player.x, player.y, player.width, player.height, ball.x, ball.y, ball.radius)) {
+        collisionSound.play();
         // we remove the element located at index
         // from the balls array
         // splice: first parameter = starting index

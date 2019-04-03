@@ -5,6 +5,7 @@ let wrongBallsEaten = 0;
 let goodBallsEaten = 0;
 let colorToEat = 'red';
 let looping = false;
+let collisionSound, winSound, looseSound;
 
 window.onload = function init() {
     // called AFTER the page has been loaded
@@ -20,6 +21,17 @@ window.onload = function init() {
     // add a mousemove event listener to the canvas
     canvas.addEventListener('mousemove', function (evt) {
         mousePos = getMousePos(canvas, evt);
+    });
+
+    // Load sounds
+    collisionSound = new Howl({
+        urls: ['https://raw.githubusercontent.com/j-o-e-d-o-e/the_assassin/master/core/assets/sounds/shot.wav'],
+    });
+    winSound = new Howl({
+        urls: ['https://raw.githubusercontent.com/j-o-e-d-o-e/the_assassin/master/core/assets/sounds/win.wav'],
+    });
+    looseSound = new Howl({
+        urls: ['https://raw.githubusercontent.com/j-o-e-d-o-e/the_assassin/master/core/assets/sounds/gameOver.wav'],
     });
 };
 
@@ -49,9 +61,11 @@ function updateStatus() {
 
     if (balls.length === 0 || wrongBallsEaten > 3) {
         ctx.fillText("Game Over!", 20, 30);
+        looseSound.play();
         looping = false;
     } else if (goodBallsEaten === nGoodBalls) {
         ctx.fillText("You Win! Final score : " + (nBalls - wrongBallsEaten), 20, 30);
+        winSound.play();
         looping = false;
     } else {
         ctx.fillText("Balls still alive: " + balls.length, 210, 30);
