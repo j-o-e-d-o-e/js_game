@@ -16,15 +16,8 @@ function getMousePos(canvas, evt) {
     };
 }
 
-function movePlayer() {
-    if (mousePos !== undefined) {
-        player.x = mousePos.x;
-        player.y = mousePos.y;
-    }
-}
-
 function drawPlayer() {
-    // GOOD practice: save the context, use 2D trasnformations
+    // GOOD practice: save the context, use 2D transformations
     ctx.save();
 
     // translate the coordinate system, draw relative to it
@@ -36,4 +29,11 @@ function drawPlayer() {
 
     // GOOD practice: restore the context
     ctx.restore();
+}
+
+function movePlayer() {
+    if (mousePos !== undefined) {
+        player.x = mousePos.x;
+        player.y = mousePos.y;
+    }
 }
