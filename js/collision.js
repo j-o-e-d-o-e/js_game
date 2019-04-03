@@ -16,13 +16,13 @@ function collides(ball, index) {
 
 // detects collision between ball and player
 function collidesWithPlayer(playerX, playerY, playerWidth, playerHeight, ballX, ballY, radius) {
-    let testX = ballX;
-    let testY = ballY;
-    if (testX < playerX) testX = playerX;
-    if (testX > (playerX + playerWidth)) testX = (playerX + playerWidth);
-    if (testY < playerY) testY = playerY;
-    if (testY > (playerY + playerHeight)) testY = (playerY + playerHeight);
-    return (((ballX - testX) * (ballX - testX) + (ballY - testY) * (ballY - testY)) < radius * radius);
+    let x = ballX;
+    let y = ballY;
+    if (x < playerX) x = playerX;
+    else if (x > (playerX + playerWidth)) x = (playerX + playerWidth);
+    if (y < playerY) y = playerY;
+    else if (y > (playerY + playerHeight)) y = (playerY + playerHeight);
+    return (((ballX - x) * (ballX - x) + (ballY - y) * (ballY - y)) < radius * radius);
 }
 
 // detects collision between ball and wall
