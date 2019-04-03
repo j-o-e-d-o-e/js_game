@@ -1,16 +1,20 @@
-const player = {
-    x: 10,
-    y: 10,
-    width: 20,
-    height: 20,
-    color: 'red',
-    move: function(){
+class Player {
+    constructor(x, y, width, height, color) {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+        this.color = color;
+    }
+
+    move() {
         if (mousePos !== undefined) {
             this.x = mousePos.x;
             this.y = mousePos.y;
         }
-    },
-    draw: function(){
+    }
+
+    draw() {
         // GOOD practice: save the context, use 2D transformations
         ctx.save();
 
@@ -24,4 +28,4 @@ const player = {
         // GOOD practice: restore the context
         ctx.restore();
     }
-};
+}
