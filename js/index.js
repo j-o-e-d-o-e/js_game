@@ -87,7 +87,6 @@ function updateStatus() {
 }
 
 function newGame() {
-
     createBalls();
     nGoodBalls = countNGoodBalls();
     wrongBallsEaten = goodBallsEaten = 0;

@@ -1,8 +1,7 @@
 function collides(ball, index) {
     if (collidesWithPlayer(player.x, player.y, player.width, player.height, ball.x, ball.y, ball.radius)) {
         collisionSound.play();
-        // remove the element located at index
-        // from the balls array
+        // remove the element located at index from the balls array
         // splice: first parameter = starting index
         //         second parameter = number of elements to remove
         if (ball.color === colorToEat) {
