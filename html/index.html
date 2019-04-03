@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Draw a monster in a canvas</title>
+    <title>Simple game animation</title>
     <link rel="stylesheet" type="text/css" href="../css/styles.css"/>
     <script src="../js/index.js"></script>
     <script src="../js/player.js"></script>
@@ -16,10 +16,12 @@
            value=10 id="nBalls"
            oninput="changeNBalls(this.value);">
     <p></p>
+
     <label for="colorChooser">Player color: </label>
     <input type="color" value='#FF0000'
            oninput="changePlayerColor(this.value);" id="colorChooser">
     <p></p>
+
     <label for="selectColorOfBallToEat">Color of ball to eat: </label>
     <select onchange="changeColorToEat(this.value);" id="selectColorOfBallToEat">
         <option value='red'>red</option>
@@ -32,8 +34,10 @@
     <input type="range" value='1'
            min=0.1 max=3 step=0.1
            oninput="changeBallSpeed(this.value);"
-           id="ballSpeed"> +
+           id="ballSpeed">
     <p></p>
+
+    <button onclick="newGame()">New Game</button>
 </div>
 
 <canvas id="myCanvas" width="400" height="400"></canvas>

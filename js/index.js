@@ -1,9 +1,10 @@
 let canvas, ctx, width, height;
 let balls = [];
-let nBalls, nGoodBalls;
+let nBalls = 10, nGoodBalls;
 let wrongBallsEaten = 0;
 let goodBallsEaten = 0;
 let colorToEat = 'red';
+let looping = false;
 
 window.onload = function init() {
     // called AFTER the page has been loaded
@@ -16,51 +17,42 @@ window.onload = function init() {
     // important, we will draw with this object
     ctx = canvas.getContext('2d');
 
-    // start game with 10 balls, balls to eat = red balls
-    startGame(10);
-
     // add a mousemove event listener to the canvas
     canvas.addEventListener('mousemove', function (evt) {
         mousePos = getMousePos(canvas, evt);
     });
-
-    // ready to go !
-    mainLoop();
 };
 
-function startGame(numBalls) {
-    do {
-        balls = createBalls(numBalls);
-        nBalls = numBalls;
-        nGoodBalls = countNGoodBalls(balls, colorToEat);
-    } while (nGoodBalls === 0);
-
-    wrongBallsEaten = goodBallsEaten = 0;
-}
-
+// continuously on-going loop
 function mainLoop() {
     // clear canvas
     ctx.clearRect(0, 0, width, height);
 
     drawPlayer();
     drawBalls();
-    drawNumBalls();
 
     movePlayer();
     moveBalls();
 
-    // ask for a new animation frame
-    requestAnimationFrame(mainLoop);
+    updateStatus();
+
+    console.log("Looping? " + looping);
+    if (looping) {
+        // ask for a new animation frame
+        requestAnimationFrame(mainLoop);
+    }
 }
 
-function drawNumBalls() {
+function updateStatus() {
     ctx.save();
     ctx.font = "20px Arial";
 
-    if (balls.length === 0) {
+    if (balls.length === 0 || wrongBallsEaten > 3) {
         ctx.fillText("Game Over!", 20, 30);
+        looping = false;
     } else if (goodBallsEaten === nGoodBalls) {
         ctx.fillText("You Win! Final score : " + (nBalls - wrongBallsEaten), 20, 30);
+        looping = false;
     } else {
         ctx.fillText("Balls still alive: " + balls.length, 210, 30);
         ctx.fillText("Good Balls eaten: " + goodBallsEaten, 210, 50);
@@ -69,8 +61,8 @@ function drawNumBalls() {
     ctx.restore();
 }
 
-function changeNBalls(nBalls) {
-    startGame(nBalls);
+function changeNBalls(num) {
+    nBalls = num;
 }
 
 function changePlayerColor(color) {
@@ -83,4 +75,15 @@ function changeColorToEat(color) {
 
 function changeBallSpeed(speed) {
     ballSpeed = speed;
+}
+
+function newGame() {
+    balls = createBalls(nBalls);
+    nGoodBalls = countNGoodBalls(balls, colorToEat);
+    wrongBallsEaten = goodBallsEaten = 0;
+    if (!looping) {
+        looping = true;
+        console.log("Looping (new Game)? " + looping);
+        mainLoop();
+    }
 }
