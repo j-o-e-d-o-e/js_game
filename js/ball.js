@@ -22,19 +22,19 @@ class Ball {
     }
 
     draw() {
-        // GOOD practice: save the context, use 2D transformations
+        // save context, use 2D transformations
         ctx.save();
 
-        // translate the coordinate system, draw relative to it
+        // translate coordinate system, draw relative to it
         ctx.translate(this.x, this.y);
 
         ctx.fillStyle = this.color;
-        // (0, 0) is the top left corner of the monster.
+        // (0, 0) is top left corner of ball
         ctx.beginPath();
         ctx.arc(0, 0, this.radius, 0, 2 * Math.PI);
         ctx.fill();
 
-        // GOOD practice: restore the context
+        // restore context
         ctx.restore();
     }
 }
