@@ -5,6 +5,7 @@ const player = {
     height: 20,
     color: 'red'
 };
+let mousePos;
 
 function getMousePos(canvas, evt) {
     // necessary work in the canvas coordinate system

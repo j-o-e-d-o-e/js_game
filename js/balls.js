@@ -1,7 +1,7 @@
 let ballSpeed = 1;
 
-function drawAllBalls(ballArray) {
-    ballArray.forEach(function (b) {
+function drawBalls() {
+    balls.forEach(function (b) {
         drawFilledCircle(b);
     });
 }
@@ -30,8 +30,7 @@ function moveBalls() {
         b.x += (b.speedX * ballSpeed);
         b.y += (b.speedY * ballSpeed);
 
-        testCollisionBallWithWalls(b);
-        testCollisionWithPlayer(b, index);
+        collides(b, index);
     });
 }
 
@@ -44,44 +43,6 @@ function countNGoodBalls(balls, colorToEat) {
     return nBalls;
 }
 
-function testCollisionBallWithWalls(b) {
-    // COLLISION WITH VERTICAL WALLS ?
-    if ((b.x + b.radius) > w) {
-        // the ball hit the right wall
-        // change horizontal direction
-        b.speedX = -b.speedX;
-
-        // put the ball at the collision point
-        b.x = w - b.radius;
-    } else if ((b.x - b.radius) < 0) {
-        // the ball hit the left wall
-        // change horizontal direction
-        b.speedX = -b.speedX;
-
-        // put the ball at the collision point
-        b.x = b.radius;
-    }
-
-    // COLLISIONS WTH HORIZONTAL WALLS ?
-    // Not in the else as the ball can touch both
-    // vertical and horizontal walls in corners
-    if ((b.y + b.radius) > h) {
-        // the ball hit the right wall
-        // change horizontal direction
-        b.speedY = -b.speedY;
-
-        // put the ball at the collision point
-        b.y = h - b.radius;
-    } else if ((b.y - b.radius) < 0) {
-        // the ball hit the left wall
-        // change horizontal direction
-        b.speedY = -b.speedY;
-
-        // put the ball at the collision point
-        b.Y = b.radius;
-    }
-}
-
 function createBalls(n) {
     // empty array
     var ballArray = [];
@@ -89,8 +50,8 @@ function createBalls(n) {
     // create n balls
     for (var i = 0; i < n; i++) {
         var b = {
-            x: w / 2,
-            y: h / 2,
+            x: width / 2,
+            y: height / 2,
             radius: 5 + 30 * Math.random(), // between 5 and 35
             speedX: -5 + 10 * Math.random(), // between -5 and + 5
             speedY: -5 + 10 * Math.random(), // between -5 and + 5
